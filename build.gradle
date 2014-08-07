@@ -1,12 +1,26 @@
 apply plugin: 'java'
+apply plugin: 'application'
 
-sourceCompatibility = 1.5
-version = '1.0'
+sourceCompatibility = '1.8'
+targetCompatibility = '1.8'
+version = '1.0.0'
+mainClassName = 'de.akull.dgh.HelloApplication'
+[compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
 
 repositories {
     mavenCentral()
 }
 
 dependencies {
-    testCompile group: 'junit', name: 'junit', version: '4.11'
+    compile('io.dropwizard:dropwizard-core:0.7.1',
+            'io.dropwizard:dropwizard-db:0.7.1',
+            'io.dropwizard:dropwizard-jdbi:0.7.1',
+            'io.dropwizard:dropwizard-testing:0.7.1',
+            'com.squareup.dagger:dagger:1.2.2',
+            'com.squareup.dagger:dagger-compiler:1.2.2')
+    runtime 'com.h2database:h2:1.4.180'
+}
+
+run {
+    args 'server', 'src/main/resources/config.yml'
 }
